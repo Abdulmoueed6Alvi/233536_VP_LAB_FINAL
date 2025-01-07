@@ -1,0 +1,71 @@
+﻿<Window x:Class="VP_LAB_FINAL.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VP_LAB_FINAL"
+        mc:Ignorable="d"
+        Title="Quiz Application" Height="500" Width="800">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <!-- Filter Section -->
+            <RowDefinition Height="*" />
+            <!-- DataGrid Section -->
+            <RowDefinition Height="Auto" />
+            <!-- Progress Bar & Buttons -->
+        </Grid.RowDefinitions>
+
+        <!-- Filter Section -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,10,0,10">
+            <TextBlock Text="Filter by Category:" VerticalAlignment="Center" FontWeight="Bold" Margin="0,0,10,0" />
+            <ComboBox x:Name="FilterComboBox" Width="200" HorizontalAlignment="Left" SelectionChanged="show_Click">
+                <ComboBoxItem Content="All" IsSelected="True"/>
+                <ComboBoxItem Content="Math"/>
+                <ComboBoxItem Content="Science"/>
+                <ComboBoxItem Content="History"/>
+                <ComboBoxItem Content="General Knowledge"/>
+            </ComboBox>
+        </StackPanel>
+
+        <!-- Quiz DataGrid Section -->
+        <DataGrid x:Name="QuizDataGrid" Grid.Row="1" Margin="0,0,0,10" Background="#FFFFFF"
+          AutoGenerateColumns="False" CanUserAddRows="False"
+          IsReadOnly="False" BorderBrush="#BDBDBD"
+          AlternatingRowBackground="#E8EAF6" Foreground="#4A148C"
+          SelectionMode="Single">
+            <DataGrid.Columns>
+                <!-- Column for Question Text -->
+                <DataGridTextColumn Header="Question" Binding="{Binding QuestionText}" Width="3*" />
+
+                <!-- Template Column for Answer Selection -->
+                <DataGridTemplateColumn Header="Your Answer" Width="2*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{Binding Options}"
+                              SelectedItem="{Binding SelectedOption, Mode=TwoWay}"
+                              SelectionChanged="ComboBox_SelectionChanged" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+
+
+
+        <!-- Progress Bar Section -->
+        <StackPanel Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Stretch" Margin="0,0,0,0">
+            <ProgressBar x:Name="QuizProgressBar" Height="20" Margin="10,0,10,10" Value="0" Minimum="0" Maximum="100" />
+
+            <!-- Action Buttons -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+                <Button x:Name="SubmitButton" Content="Submit" Width="100" Margin="10" Background="#4CAF50" Foreground="White" Click="SubmitButton_Click" />
+                <Button x:Name="ResetButton" Content="Reset" Width="100" Margin="10" Background="#F44336" Foreground="White" Click="ResetButton_Click" />
+                <Button x:Name="ExitButton" Content="Exit" Width="100" Margin="10" Background="#FF5722" Foreground="White" Click="ExitButton_Click"/>
+                <Button x:Name="show" Content="Show" Width="100" Margin="10" Background="#2196F3" Foreground="White" Click="show_Click"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
